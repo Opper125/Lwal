@@ -80,7 +80,7 @@
             }
         }
 
-        /* Falling Leaf & Petal Animation */
+        /* Falling Heart & Petal Animation */
         .falling-item {
             position: absolute;
             top: -50px;
@@ -90,17 +90,14 @@
             z-index: 1;
         }
 
-        .falling-item.leaf {
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%2366bb6a' d='M507.4 34.6c-4.4-4.4-11.4-4.4-15.8 0L266 260.2 248.8 243l135-135c4.4-4.4 4.4-11.4 0-15.8L354.2 82.2c-4.4-4.4-11.4-4.4-15.8 0L203 217.4 185.8 200.2l135-135c4.4-4.4 4.4-11.4 0-15.8L309.4 39.8c-4.4-4.4-11.4-4.4-15.8 0L158.2 181.4 141 164.2l135-135c4.4-4.4 4.4-11.4 0-15.8L259.8 14.6c-4.4-4.4-11.4-4.4-15.8 0L108.6 151 91.4 133.8l135-135c4.4-4.4 4.4-11.4 0-15.8L193.8 14.6c-4.4-4.4-11.4-4.4-15.8 0L39.8 193.8c-4.4 4.4-4.4 11.4 0 15.8L181.4 354.2c4.4 4.4 11.4 4.4 15.8 0L354.2 193.8c4.4-4.4 4.4-11.4 0-15.8L217.4 158.2c-4.4-4.4-11.4-4.4-15.8 0L181.4 203c-4.4 4.4-4.4 11.4 0 15.8L243 248.8l-17.2 17.2L34.6 507.4c-4.4 4.4-4.4 11.4 0 15.8l15.8 15.8c4.4 4.4 11.4 4.4 15.8 0L260.2 266l17.2-17.2L507.4 34.6c4.4-4.4 4.4-11.4 0-15.8L491.6 34.6z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            width: 25px;
-            height: 25px;
-        }
-
         .falling-item.petal {
             font-size: 20px;
             color: #ff80ab;
+        }
+
+        .falling-item.heart {
+            font-size: 20px;
+            color: #ff3366;
         }
 
         @keyframes fall {
@@ -193,7 +190,7 @@
 
     <!-- Main Dashboard -->
     <div id="dashboard" class="hidden">
-        <!-- Background Audio Player -->
+        <!-- Background Audio Player with the new Vocaroo link -->
         <audio id="background-audio" loop src="https://voca.ro/199RFmLxO1br"></audio>
 
         <!-- Top Navigation Bar -->
@@ -209,7 +206,7 @@
         <main class="container mx-auto p-4 md:p-8 relative z-20">
             <section class="my-10">
                 <h2 class="text-center text-3xl md:text-4xl font-bold text-pink-500 mb-8">
-                    မင်းအတွက် ပုံရိပ်များ
+                    ငါမင်းကို အရမ်းချစ်ခဲ့တာ မင်းသိလား
                 </h2>
                 <div id="image-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Images will be injected here by JavaScript -->
@@ -262,7 +259,7 @@
 
             const payload = {
                 instances: {
-                    prompt: "A hyper-realistic, beautiful flower garden in a sunny, peaceful afternoon. The image should be seamlessly tileable.",
+                    prompt: "A hyper-realistic, beautiful, lush green field with beautiful, serene clouds in the sky. A couple is walking hand-in-hand in the distance. The image should be seamlessly tileable.",
                 },
                 parameters: { "sampleCount": 1 }
             };
@@ -329,6 +326,8 @@
             item.classList.add('falling-item', type);
             if (type === 'petal') {
                 item.innerHTML = '🌸';
+            } else if (type === 'heart') {
+                item.innerHTML = '❤️';
             }
             item.style.left = Math.random() * 100 + 'vw';
             item.style.animationDuration = Math.random() * 3 + 4 + 's';
@@ -384,8 +383,8 @@
             }
             showNextMessage();
             loadImages();
-            setInterval(() => createFallingItem('leaf'), 500);
-            setInterval(() => createFallingItem('petal'), 300);
+            setInterval(() => createFallingItem('petal'), 500);
+            setInterval(() => createFallingItem('heart'), 750);
         };
     </script>
 </body>
