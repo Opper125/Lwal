@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for hearts and icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for a beautiful font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: #fce4ec;
+            overflow-x: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 2s ease-in-out;
+            will-change: background-image;
+        }
+
+        /* Intro Screen Styling */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fce4ec 0%, #ff80ab 100%);
+            z-index: 100;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .intro-text {
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            padding: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInAndUp 1s forwards;
+            animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #ff3366;
+            width: 60px;
+            height: 60px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Keyframes for the intro text animation */
+        @keyframes fadeInAndUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Falling Leaf & Petal Animation */
+        .falling-item {
+            position: absolute;
+            top: -50px;
+            pointer-events: none;
+            will-change: transform, opacity;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        .falling-item.leaf {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%2366bb6a' d='M507.4 34.6c-4.4-4.4-11.4-4.4-15.8 0L266 260.2 248.8 243l135-135c4.4-4.4 4.4-11.4 0-15.8L354.2 82.2c-4.4-4.4-11.4-4.4-15.8 0L203 217.4 185.8 200.2l135-135c4.4-4.4 4.4-11.4 0-15.8L309.4 39.8c-4.4-4.4-11.4-4.4-15.8 0L158.2 181.4 141 164.2l135-135c4.4-4.4 4.4-11.4 0-15.8L259.8 14.6c-4.4-4.4-11.4-4.4-15.8 0L108.6 151 91.4 133.8l135-135c4.4-4.4 4.4-11.4 0-15.8L193.8 14.6c-4.4-4.4-11.4-4.4-15.8 0L39.8 193.8c-4.4 4.4-4.4 11.4 0 15.8L181.4 354.2c4.4 4.4 11.4 4.4 15.8 0L354.2 193.8c4.4-4.4 4.4-11.4 0-15.8L217.4 158.2c-4.4-4.4-11.4-4.4-15.8 0L181.4 203c-4.4 4.4-4.4 11.4 0 15.8L243 248.8l-17.2 17.2L34.6 507.4c-4.4 4.4-4.4 11.4 0 15.8l15.8 15.8c4.4 4.4 11.4 4.4 15.8 0L260.2 266l17.2-17.2L507.4 34.6c4.4-4.4 4.4-11.4 0-15.8L491.6 34.6z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 25px;
+            height: 25px;
+        }
+
+        .falling-item.petal {
+            font-size: 20px;
+            color: #ff80ab;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotateZ(360deg);
+            }
+        }
+
+        /* Nav Bar Styling */
+        .nav-bar {
+            position: relative;
+            background: linear-gradient(to right, #ff99cc, #ff6699);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid #ff3366;
+            padding: 1.5rem 0;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .title-text {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .heart-emoji {
+            font-size: 1.5rem;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Gallery Card & Image Animation */
+        .gallery-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            perspective: 1000px;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-card img {
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .gallery-card:hover img {
+            transform: rotateY(5deg) scale(1.05);
+        }
+
+        /* Heart Spread Animation on Image */
+        .heart-spread {
+            position: absolute;
+            background: rgba(255, 102, 153, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: spread 1s forwards;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        @keyframes spread {
+            from {
+                opacity: 1;
+                transform: scale(0);
+            }
+            to {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+    </style>
+</head>
+<body class="bg-pink-100 min-h-screen">
+    <!-- Introduction Splash Screen -->
+    <div id="intro-screen">
+        <div id="intro-text-container" class="flex flex-col items-center">
+            <div id="intro-text"></div>
+            <div id="loading-spinner" class="hidden my-4 loader"></div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="hidden">
+        <!-- Background Audio Player -->
+        <audio id="background-audio" loop src="https://voca.ro/199RFmLxO1br"></audio>
+
+        <!-- Top Navigation Bar -->
+        <header class="nav-bar text-center">
+            <h1 class="title-text text-3xl md:text-5xl font-bold flex items-center justify-center space-x-4">
+                <i class="fas fa-heart text-white heart-emoji"></i>
+                <span>I LOVE YOU</span>
+                <i class="fas fa-heart text-white heart-emoji"></i>
+            </h1>
+        </header>
+
+        <!-- Main Content Section -->
+        <main class="container mx-auto p-4 md:p-8 relative z-20">
+            <section class="my-10">
+                <h2 class="text-center text-3xl md:text-4xl font-bold text-pink-500 mb-8">
+                    ငါမင်းကို အရမ်းချစ်တယ်သိလား
+                </h2>
+                <div id="image-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Images will be injected here by JavaScript -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm py-4 relative z-20">
+            <p>&copy; 2025. All love reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const introMessages = [
+            "ဝင်ကြိပေးလို့ကျေးဇူးတင်ပါတယ်",
+            "ဒီ Website လေးက မင်းအတွက် အကောင်းဆုံးဖြစ်မယ်ထင်ပါတယ်",
+            "မင်းကိုချစ်တဲ့ အချစ်တွေ ဒီ Website ထဲမှာ သက်သေရှိပါတယ်",
+            "မင်းကြိုက်နှစ်သက်မယ်လို့ ငါမျှော်လင့်ပါတယ်",
+            "မင်းမချစ်တော့်တဲ့ 'မောင်' မင်းကို နုတ်ဆက်ပါတယ် ",
+            "Website လေးထဲမှာ ဘာတွေရှိလဲ ကြိဖို့ အစဥ်သင့်ဖြစ်နေပီထင်ပါတယ်",
+            "လွေ",
+            "စတင်ကြိရှု့လိုက်ရအောင်"
+        ];
+
+        const imageUrls = [
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_015928.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_015943.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_015958.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020027.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020041.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020059.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020115.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020131.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020145.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020208.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020227.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020242.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020258.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020320.jpg",
+            "https://raw.githubusercontent.com/Opper125/casino-roulette/a3580b1e2aba75b5433d1a23248fde02ff09e28c/IMG_20250923_020334.jpg"
+        ];
+        
+        let backgroundGenerated = false;
+
+        // --- BACKGROUND IMAGE GENERATION ---
+        async function generateAndSetBackground() {
+            const loadingSpinner = document.getElementById('loading-spinner');
+            loadingSpinner.classList.remove('hidden');
+
+            const payload = {
+                instances: {
+                    prompt: "A hyper-realistic, beautiful flower garden in a sunny, peaceful afternoon. The image should be seamlessly tileable.",
+                },
+                parameters: { "sampleCount": 1 }
+            };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API response error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
+
+                if (base64Data) {
+                    document.body.style.backgroundImage = `url(data:image/png;base64,${base64Data})`;
+                    backgroundGenerated = true;
+                } else {
+                    console.error('Image generation failed: No data received.');
+                }
+            } catch (error) {
+                console.error('Error generating background image:', error);
+                // Fallback to a solid color if the API fails
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundColor = '#fce4ec';
+            } finally {
+                loadingSpinner.classList.add('hidden');
+                // The intro screen will disappear after this.
+                document.getElementById('intro-text-container').innerHTML = `
+                    <button id="start-button" class="mt-8 px-6 py-3 bg-pink-500 text-white font-bold rounded-full shadow-lg hover:bg-pink-600 transition-all transform hover:scale-105">
+                        Website ကို စတင်ရန်
+                    </button>
+                `;
+
+                document.getElementById('start-button').addEventListener('click', () => {
+                    const introScreen = document.getElementById('intro-screen');
+                    const dashboard = document.getElementById('dashboard');
+
+                    introScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        introScreen.style.display = 'none';
+                        dashboard.classList.remove('hidden');
+                        
+                        // Start playing the audio when the dashboard is visible
+                        const audioPlayer = document.getElementById('background-audio');
+                        audioPlayer.play().catch(e => {
+                            console.error("Audio playback failed:", e);
+                        });
+                    }, 2000);
+                });
+            }
+        }
+
+        // --- UI & ANIMATION FUNCTIONS ---
+
+        function createFallingItem(type) {
+            const item = document.createElement('div');
+            item.classList.add('falling-item', type);
+            if (type === 'petal') {
+                item.innerHTML = '🌸'❤'🧡'💛'💖'💞';
+            }
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = Math.random() * 3 + 4 + 's';
+            item.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(item);
+            item.addEventListener('animationend', () => item.remove());
+        }
+
+        function loadImages() {
+            const gallery = document.getElementById('image-gallery');
+            imageUrls.forEach(url => {
+                const card = document.createElement('div');
+                card.classList.add('gallery-card');
+
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = "Romantic Image";
+                img.classList.add('w-full', 'h-auto', 'rounded-lg');
+                
+                card.appendChild(img);
+                gallery.appendChild(card);
+
+                card.addEventListener('click', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const heart = document.createElement('span');
+                    heart.classList.add('heart-spread');
+                    heart.style.left = `${e.clientX - rect.left}px`;
+                    heart.style.top = `${e.clientY - rect.top}px`;
+                    card.appendChild(heart);
+                    heart.addEventListener('animationend', () => heart.remove());
+                });
+            });
+        }
+
+        // Main function to run on window load
+        window.onload = function() {
+            const introTextElement = document.getElementById('intro-text');
+            let index = 0;
+
+            function showNextMessage() {
+                if (index < introMessages.length) {
+                    const textElement = document.createElement('div');
+                    textElement.classList.add('intro-text');
+                    textElement.textContent = introMessages[index];
+                    introTextElement.innerHTML = '';
+                    introTextElement.appendChild(textElement);
+                    index++;
+                    setTimeout(showNextMessage, 3000);
+                } else {
+                    // After the last message, generate background and show the start button
+                    generateAndSetBackground();
+                }
+            }
+            showNextMessage();
+            loadImages();
+            setInterval(() => createFallingItem('leaf'), 500);
+            setInterval(() => createFallingItem('petal'), 300);
+        };
+    </script>
+</body>
+</html>
+
