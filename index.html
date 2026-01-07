@@ -1,26 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I Love You</title>
-    <!-- Tailwind CSS for styling -->
+    <!-- Tailwind CSS - Preloaded for performance -->
+    <link rel="preload" as="script" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for hearts and icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts for a beautiful font -->
+    <!-- Font Awesome - Only load essential icons -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <!-- Google Fonts - Optimized loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Merriweather', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 20%, #6c5ce7 40%, #a29bfe 60%, #fd79a8 80%, #ff6b9d 100%);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            animation: gradientShift 20s ease infinite;
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
+            /* Performance optimization */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         @keyframes gradientShift {
@@ -29,7 +41,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Intro Screen Styling */
+        /* Intro Screen Styling with Enhanced 3D */
         #intro-screen {
             position: fixed;
             top: 0;
@@ -41,139 +53,224 @@
             align-items: center;
             background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 25%, #6c5ce7 50%, #a29bfe 75%, #fd79a8 100%);
             background-size: 400% 400%;
-            animation: gradientShift 10s ease infinite;
+            animation: gradientShift 15s ease infinite;
             z-index: 100;
             transition: opacity 2s ease-in-out;
+            perspective: 1000px;
+            /* Performance optimization */
+            will-change: opacity;
         }
 
         .intro-text {
             color: white;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            font-weight: 600;
             text-align: center;
-            padding: 2rem;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 105, 180, 0.8);
+            padding: 3rem;
+            text-shadow: 
+                0 0 30px rgba(255, 255, 255, 0.9), 
+                0 0 60px rgba(255, 105, 180, 1),
+                0 5px 20px rgba(0, 0, 0, 0.5);
             opacity: 0;
-            transform: translateY(20px) scale(0.9);
-            animation: fadeInAndUp 1.2s forwards;
+            transform: translateY(30px) scale(0.9) rotateX(10deg);
+            animation: fadeInAndUp3D 1.5s forwards;
             animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 20px 60px rgba(255, 105, 180, 0.6),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: transform, opacity;
         }
 
-        /* Loading Spinner */
-        .loader {
-            border: 8px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 8px solid #ff3366;
-            border-right: 8px solid #ff6b9d;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeInAndUp {
+        @keyframes fadeInAndUp3D {
             from {
                 opacity: 0;
-                transform: translateY(20px) scale(0.9);
+                transform: translateY(30px) scale(0.9) rotateX(10deg);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0) scale(1) rotateX(0deg);
             }
         }
 
-        /* Falling Heart & Petal Animation */
+        /* Loading Spinner with 3D Effect */
+        .loader {
+            border: 10px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top: 10px solid #ff3366;
+            border-right: 10px solid #ff6b9d;
+            border-bottom: 10px solid #fd79a8;
+            width: 80px;
+            height: 80px;
+            animation: spin3D 1.2s linear infinite;
+            box-shadow: 
+                0 0 30px rgba(255, 51, 102, 0.8),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: transform;
+        }
+
+        @keyframes spin3D {
+            0% { transform: rotate(0deg) rotateY(0deg); }
+            50% { transform: rotate(180deg) rotateY(180deg); }
+            100% { transform: rotate(360deg) rotateY(360deg); }
+        }
+
+        /* 3D Falling Hearts & Petals - OPTIMIZED */
         .falling-item {
             position: absolute;
             top: -50px;
             pointer-events: none;
-            will-change: transform, opacity;
-            animation: fall linear infinite;
+            animation: fall3D linear infinite;
             z-index: 1;
-            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 1));
+            transform-style: preserve-3d;
+            /* Performance optimization - GPU acceleration */
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
 
         .falling-item.petal {
-            font-size: 24px;
-            animation: fall linear infinite, rotate 3s linear infinite;
+            font-size: 32px;
+            animation: fall3D linear infinite, rotate3D 4s linear infinite;
         }
 
         .falling-item.heart {
-            font-size: 24px;
-            animation: fall linear infinite, pulse 1.5s ease-in-out infinite;
+            font-size: 28px;
+            animation: fall3D linear infinite, pulse3D 2s ease-in-out infinite;
         }
 
-        @keyframes fall {
+        @keyframes fall3D {
             to {
-                transform: translateY(105vh);
-                opacity: 0.5;
+                transform: translateY(110vh) translateZ(0px);
+                opacity: 0.3;
             }
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes rotate3D {
+            from { transform: rotate(0deg) rotateY(0deg); }
+            to { transform: rotate(360deg) rotateY(360deg); }
         }
 
-        /* Nav Bar Styling */
+        @keyframes pulse3D {
+            0%, 100% { transform: scale(1) rotateZ(0deg); }
+            25% { transform: scale(1.4) rotateZ(-15deg); }
+            50% { transform: scale(1.2) rotateZ(15deg); }
+            75% { transform: scale(1.4) rotateZ(-15deg); }
+        }
+
+        /* Enhanced Nav Bar with Glassmorphism */
         .nav-bar {
             position: relative;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b9d 100%);
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
-            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
-            padding: 2rem 0;
-            border-radius: 0 0 30px 30px;
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.9) 0%, rgba(245, 87, 108, 0.9) 50%, rgba(255, 107, 157, 0.9) 100%);
+            backdrop-filter: blur(30px) saturate(200%);
+            box-shadow: 
+                0 15px 50px rgba(245, 87, 108, 0.6),
+                inset 0 0 40px rgba(255, 255, 255, 0.3);
+            border-bottom: 4px solid rgba(255, 255, 255, 0.5);
+            padding: 2.5rem 0;
+            border-radius: 0 0 40px 40px;
             background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
+            animation: gradientShift 10s ease infinite;
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: background-position;
         }
 
         .title-text {
             color: white;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 107, 157, 0.6), 0 5px 10px rgba(0, 0, 0, 0.3);
-            letter-spacing: 3px;
+            text-shadow: 
+                0 0 30px rgba(255, 255, 255, 1), 
+                0 0 60px rgba(255, 107, 157, 1), 
+                0 8px 15px rgba(0, 0, 0, 0.4);
+            letter-spacing: 4px;
             font-family: 'Pacifico', cursive;
-            animation: glow 2s ease-in-out infinite;
+            animation: glow3D 2.5s ease-in-out infinite;
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: text-shadow, transform;
         }
 
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 107, 157, 0.6); }
-            50% { text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 60px rgba(255, 107, 157, 1); }
+        @keyframes glow3D {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 30px rgba(255, 255, 255, 1), 
+                    0 0 60px rgba(255, 107, 157, 1),
+                    0 8px 15px rgba(0, 0, 0, 0.4);
+                transform: translateZ(0px);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 50px rgba(255, 255, 255, 1), 
+                    0 0 100px rgba(255, 107, 157, 1),
+                    0 10px 20px rgba(0, 0, 0, 0.5);
+                transform: translateZ(10px);
+            }
         }
 
         .heart-emoji {
-            font-size: 2rem;
-            animation: heartBeat 1.5s infinite ease-in-out;
-            filter: drop-shadow(0 0 15px rgba(255, 51, 102, 0.8));
+            font-size: 2.5rem;
+            animation: heartBeat3D 1.8s infinite ease-in-out;
+            filter: drop-shadow(0 0 20px rgba(255, 51, 102, 1));
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: transform;
         }
 
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.3) rotate(-10deg); }
-            50% { transform: scale(1.1) rotate(10deg); }
-            75% { transform: scale(1.3) rotate(-10deg); }
+        @keyframes heartBeat3D {
+            0%, 100% { transform: scale(1) rotateY(0deg); }
+            25% { transform: scale(1.4) rotate(-12deg) rotateY(20deg); }
+            50% { transform: scale(1.2) rotate(12deg) rotateY(-20deg); }
+            75% { transform: scale(1.4) rotate(-12deg) rotateY(20deg); }
         }
 
-        /* Gallery Card & Image Animation */
+        /* Ultra Enhanced 3D Gallery Cards - OPTIMIZED */
         .gallery-card {
             position: relative;
             overflow: hidden;
-            border-radius: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
-            perspective: 1000px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2rem;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.3), 
+                0 10px 25px rgba(255, 107, 157, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
+            perspective: 1500px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 3px solid rgba(255, 255, 255, 0.5);
             transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: transform, box-shadow;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        /* Corner Hearts on Cards */
+        .gallery-card::after {
+            content: '💗';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 3rem;
+            opacity: 0;
+            transform: rotate(-15deg) scale(0.5);
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 1));
+            z-index: 10;
+            /* Performance optimization */
+            will-change: opacity, transform;
+        }
+
+        .gallery-card:hover::after {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
         }
 
         .gallery-card::before {
@@ -183,9 +280,11 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transition: left 0.6s;
             z-index: 1;
+            /* Performance optimization */
+            will-change: left;
         }
 
         .gallery-card:hover::before {
@@ -193,114 +292,191 @@
         }
 
         .gallery-card:hover {
-            transform: translateY(-15px) rotateY(5deg) scale(1.05);
-            box-shadow: 0 25px 50px rgba(255, 107, 157, 0.4), 0 10px 25px rgba(245, 87, 108, 0.3);
+            transform: translateY(-20px) rotateY(8deg) rotateX(5deg) scale(1.08);
+            box-shadow: 
+                0 35px 70px rgba(255, 107, 157, 0.6), 
+                0 15px 35px rgba(245, 87, 108, 0.5),
+                inset 0 0 40px rgba(255, 255, 255, 0.3);
         }
 
         .gallery-card img {
-            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             transform-style: preserve-3d;
-            filter: brightness(1.05) contrast(1.1);
+            filter: brightness(1.1) contrast(1.15) saturate(1.2);
+            /* Performance optimization */
+            will-change: transform;
+            backface-visibility: hidden;
+            /* Lazy loading support */
+            max-width: 100%;
+            height: auto;
         }
 
         .gallery-card:hover img {
-            transform: scale(1.15) rotate(2deg);
+            transform: scale(1.2) rotate(3deg) translateZ(20px);
         }
 
-        /* Heart Spread Animation on Image */
+        /* Enhanced Heart Spread with 3D - OPTIMIZED */
         .heart-spread {
             position: absolute;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(255, 51, 102, 0.8), transparent);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 51, 102, 1), rgba(255, 105, 180, 0.5), transparent);
             border-radius: 50%;
             pointer-events: none;
-            animation: spread 1.2s ease-out forwards;
+            animation: spread3D 1.5s ease-out forwards;
             opacity: 0;
-            transform: scale(0);
+            transform: scale(0) rotateZ(0deg);
             z-index: 10;
+            box-shadow: 0 0 40px rgba(255, 51, 102, 1);
+            /* Performance optimization */
+            will-change: transform, opacity;
         }
 
-        @keyframes spread {
+        @keyframes spread3D {
             0% {
                 opacity: 1;
-                transform: scale(0);
+                transform: scale(0) rotateZ(0deg);
             }
             50% {
-                opacity: 0.6;
+                opacity: 0.8;
+                transform: scale(2) rotateZ(180deg);
             }
             100% {
                 opacity: 0;
-                transform: scale(3);
+                transform: scale(4) rotateZ(360deg);
             }
         }
 
-        /* Content Section Styling */
+        /* Enhanced Content Title */
         .content-title {
             font-family: 'Pacifico', cursive;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b9d 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            filter: drop-shadow(0 5px 10px rgba(245, 87, 108, 0.3));
-            animation: titleFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 8px 15px rgba(245, 87, 108, 0.5));
+            animation: titleFloat3D 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: transform;
         }
 
-        @keyframes titleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes titleFloat3D {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-15px) rotateX(5deg); }
         }
 
-        /* Start Button Styling */
+        /* Enhanced Start Button with 3D */
         #start-button {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.5);
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 
+                0 15px 40px rgba(245, 87, 108, 0.7),
+                inset 0 0 30px rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            border: 3px solid rgba(255, 255, 255, 0.6);
             font-family: 'Pacifico', cursive;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: transform, box-shadow;
         }
 
         #start-button:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.7);
+            transform: scale(1.15) translateY(-8px) rotateX(10deg);
+            box-shadow: 
+                0 20px 60px rgba(245, 87, 108, 1),
+                inset 0 0 40px rgba(255, 255, 255, 0.5);
             background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
         }
 
-        /* Footer Styling */
+        /* Footer with Glassmorphism */
         footer {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(30px) saturate(180%);
+            border-top: 3px solid rgba(255, 255, 255, 0.4);
             color: white;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 -10px 30px rgba(255, 105, 180, 0.3);
         }
 
-        /* Sparkle Effect */
+        /* Enhanced Sparkle with 3D - OPTIMIZED */
         .sparkle {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 6px;
+            height: 6px;
             background: white;
             border-radius: 50%;
             pointer-events: none;
-            animation: sparkleAnim 1.5s ease-out forwards;
-            box-shadow: 0 0 10px white;
+            animation: sparkleAnim3D 2s ease-out forwards;
+            box-shadow: 0 0 20px white;
+            transform-style: preserve-3d;
+            /* Performance optimization */
+            will-change: transform, opacity;
         }
 
-        @keyframes sparkleAnim {
+        @keyframes sparkleAnim3D {
             0% {
                 opacity: 1;
-                transform: scale(0) translateY(0);
+                transform: scale(0) translateY(0) rotateZ(0deg);
             }
             100% {
                 opacity: 0;
-                transform: scale(1) translateY(-100px);
+                transform: scale(2) translateY(-120px) rotateZ(360deg);
+            }
+        }
+
+        /* Floating Flowers Background Decoration - OPTIMIZED */
+        .flower-decoration {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: floatFlower 20s ease-in-out infinite;
+            z-index: 0;
+            filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.8));
+            font-size: 4rem;
+            /* Performance optimization */
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        @keyframes floatFlower {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        /* Hidden class for performance */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .intro-text {
+                font-size: 1.5rem;
+                padding: 2rem;
+            }
+            .title-text {
+                font-size: 2rem !important;
+            }
+            .content-title {
+                font-size: 2rem !important;
+            }
+            /* Reduce animations on mobile for better performance */
+            .flower-decoration {
+                display: none;
             }
         }
     </style>
 </head>
 <body class="bg-pink-100 min-h-screen">
+    <!-- Floating Flower Decorations -->
+    <div class="flower-decoration" style="top: 10%; left: 5%;">🌸</div>
+    <div class="flower-decoration" style="top: 20%; right: 10%; animation-delay: 2s;">🌺</div>
+    <div class="flower-decoration" style="top: 60%; left: 8%; animation-delay: 4s;">🌷</div>
+    <div class="flower-decoration" style="top: 70%; right: 5%; animation-delay: 6s;">🌹</div>
+    <div class="flower-decoration" style="top: 40%; left: 15%; animation-delay: 8s;">💐</div>
+    <div class="flower-decoration" style="top: 80%; right: 15%; animation-delay: 10s;">🌸</div>
+
     <!-- Introduction Splash Screen -->
     <div id="intro-screen">
         <div id="intro-text-container" class="flex flex-col items-center">
@@ -311,8 +487,10 @@
 
     <!-- Main Dashboard -->
     <div id="dashboard" class="hidden">
-        <!-- Background Audio Player with the new Vocaroo link -->
-        <audio id="background-audio" loop src="https://voca.ro/199RFmLxO1br"></audio>
+        <!-- Background Audio Player with Supabase link -->
+        <audio id="background-audio" loop preload="none">
+            <source src="https://qcbzxalqpcppiorffpas.supabase.co/storage/v1/object/public/website-assets/video-banners/VID_20251213_204831_298.mp4" type="audio/mp4">
+        </audio>
 
         <!-- Top Navigation Bar -->
         <header class="nav-bar text-center">
@@ -327,7 +505,7 @@
         <main class="container mx-auto p-4 md:p-8 relative z-20">
             <section class="my-12">
                 <h2 class="content-title text-center text-4xl md:text-5xl font-bold mb-12">
-                    ကျွန့်တော် 💙မမ💙ကိုအရမ်းချစ်တယ် သိလား!
+                    ကို့ကို 💙ချစ်ရသူလေး💙ကိုအရမ်းချစ်တယ် သိလား!
                 </h2>
                 <div id="image-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     <!-- Images will be injected here by JavaScript -->
@@ -342,45 +520,79 @@
     </div>
 
     <script>
+        // PERFORMANCE OPTIMIZATION: Debounce function for scroll/resize events
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // PERFORMANCE OPTIMIZATION: Throttle function for animations
+        function throttle(func, delay) {
+            let lastCall = 0;
+            return function(...args) {
+                const now = new Date().getTime();
+                if (now - lastCall < delay) return;
+                lastCall = now;
+                return func(...args);
+            };
+        }
+
+        // Updated intro messages with 4 seconds display time
         const introMessages = [
-            "ဝင်ကြိပေးလို့ကျေးဇူးတင်ပါတယ်",
-            "ဒီ Website လေးက ❤မမ❤ အတွက် အကောင်းဆုံးဖြစ်မယ်ထင်ပါတယ်",
-            "❤မမ❤ ကိုချစ်တဲ့ အချစ်တွေ ဒီ Website ထဲမှာ သက်သေရှိပါတယ်",
-            "❤မမ❤ ကြိုက်နှစ်သက်မယ်လို့ မောင်🥺 မျှော်လင့်ပါတယ်",
-            "စိတ်ဆိုးပျေပါတော့်နော် ❤မမ❤ မှားခဲ့ရဂ်ခွင့်လွှတ်ပါ ",
-            "Website လေးထဲမှာ ဘာတွေရှိလဲ ကြိဖို့ အစဥ်သင့်ဖြစ်နေပီထင်ပါတယ်",
-            "နိုးနိုး ချစ် ❤မမ❤",
-            "စတင်ကြိရှု့လိုက်ရအောင်"
+            "ဒီထဲမှာ ကိုကိုမင်းကို စတွေ့ပီးချစ်မိသွားတဲ့ သက်သေတွေပါပါတယ်",
+            "ဒါ့ကြောင့်မို့ မင်းလေးစိတ်ရှည်ရှည်နဲ့ ကို လုပ်ပေးထားတဲ့ ပျော်ရွှင်မူ့ကိုအဆုံးထိလိုက်ပါကြိပေးပါနော်",
+            "အခုမှ စတွေ့လို့ ကို့်ကိုယ် စိတ်တ်ိုမိပါတယ်",
+            "ကိုယ်ရွေးချယ်ရမည့် အမျိုးသမီးလေးက ခင်ဗျာလေး ဖြစ်ဖို့စောင့်ပေးပါနော်",
+            "ကျေးဇူးပြုပီး ကို့ကိုအချိန်လေး တခုထိပေးပါ ကိုယ်မင်းကို ပိုင်ဆိုင်ဖို့အခွင့်ရေးရမှာမို့ပါ",
+            "စကားတွေအများကြီးပြောခြင်ပေမဲ့ ဒီလောက်နဲ့အဆုံးသတ်ပါ့ရစေနော်",
+            "ချစ်ရသူလေးရေ မင်းဒါကိုကြိပီး ပျော်ရွှင်သွားမှာပါ",
+            "အတူသွားကြိရအောင် Last Go"
         ];
 
+        // Updated image URLs with raw GitHub links
         const imageUrls = [
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160452_717.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160702_902.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_043.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_056.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_077.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_159.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_449.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_503.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_558.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_575.jpg",
-            "https://raw.githubusercontent.com/Opper125/Lwal/af94dc12d93f03f9fc5fd69949c5d5096196828b/IMG_20251206_160703_649.jpg"
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173019_297.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173019_688.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173027_640.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173027_764.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173757_807.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173757_812.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173758_160.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173758_462.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173758_645.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_173758_670.jpg",
+            "https://raw.githubusercontent.com/Opper125/A9/6e77569ca6c8bd9a07e78f1d0162cd868036e8d3/IMG_20251213_174712_571.jpg"
         ];
-        
-        let backgroundGenerated = false;
 
-        // --- BACKGROUND ANIMATION (No API needed) ---
+        // PERFORMANCE: Track active animations
+        let activeAnimations = {
+            falling: [],
+            sparkles: []
+        };
+
+        // PERFORMANCE: Max items on screen
+        const MAX_FALLING_ITEMS = 15;
+        const MAX_SPARKLES = 10;
+
+        // Setup background with smooth transition
         async function setupBackground() {
             const loadingSpinner = document.getElementById('loading-spinner');
             loadingSpinner.classList.remove('hidden');
 
             // Simulate loading time for smooth transition
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
             loadingSpinner.classList.add('hidden');
             
             document.getElementById('intro-text-container').innerHTML = `
-                <button id="start-button" class="mt-8 px-8 py-4 bg-pink-500 text-white font-bold rounded-full shadow-lg hover:bg-pink-600 transition-all transform hover:scale-105 text-xl">
+                <button id="start-button" class="mt-8 px-10 py-5 bg-pink-500 text-white font-bold rounded-full shadow-lg hover:bg-pink-600 transition-all transform hover:scale-105 text-xl">
                     Website ကို စတင်ရန်
                 </button>
             `;
@@ -394,21 +606,30 @@
                     introScreen.style.display = 'none';
                     dashboard.classList.remove('hidden');
                     
-                    // Start playing the audio when the dashboard is visible
+                    // AUTO PLAY AUDIO from Supabase when dashboard is visible
                     const audioPlayer = document.getElementById('background-audio');
+                    audioPlayer.load(); // Load audio only when needed
                     audioPlayer.play().catch(e => {
                         console.error("Audio playback failed:", e);
+                        // Retry on user interaction
+                        document.body.addEventListener('click', () => {
+                            audioPlayer.play().catch(err => console.error("Retry failed:", err));
+                        }, { once: true });
                     });
                     
-                    // Add sparkle effects
-                    setInterval(createSparkle, 300);
+                    // PERFORMANCE: Throttled sparkle effects
+                    setInterval(createSparkleThrottled, 600);
                 }, 2000);
             });
         }
 
-        // --- UI & ANIMATION FUNCTIONS ---
-
+        // OPTIMIZED: Create falling items with cleanup
         function createFallingItem(type) {
+            // PERFORMANCE: Limit active falling items
+            if (activeAnimations.falling.length >= MAX_FALLING_ITEMS) {
+                return;
+            }
+
             const item = document.createElement('div');
             item.classList.add('falling-item', type);
             if (type === 'petal') {
@@ -417,65 +638,104 @@
                 item.innerHTML = '❤️';
             }
             item.style.left = Math.random() * 100 + 'vw';
-            item.style.animationDuration = Math.random() * 3 + 5 + 's';
+            const duration = Math.random() * 4 + 6;
+            item.style.animationDuration = duration + 's';
             item.style.animationDelay = Math.random() * 2 + 's';
-            item.style.fontSize = (Math.random() * 10 + 20) + 'px';
+            item.style.fontSize = (Math.random() * 15 + 25) + 'px';
+            
             document.body.appendChild(item);
-            item.addEventListener('animationend', () => item.remove());
+            activeAnimations.falling.push(item);
+
+            // PERFORMANCE: Remove after animation
+            setTimeout(() => {
+                item.remove();
+                const index = activeAnimations.falling.indexOf(item);
+                if (index > -1) activeAnimations.falling.splice(index, 1);
+            }, (duration + 2) * 1000);
         }
 
+        // OPTIMIZED: Create sparkle effects with cleanup
         function createSparkle() {
+            // PERFORMANCE: Limit active sparkles
+            if (activeAnimations.sparkles.length >= MAX_SPARKLES) {
+                return;
+            }
+
             const sparkle = document.createElement('div');
             sparkle.classList.add('sparkle');
             sparkle.style.left = Math.random() * 100 + 'vw';
             sparkle.style.top = Math.random() * 100 + 'vh';
+            
             document.body.appendChild(sparkle);
-            sparkle.addEventListener('animationend', () => sparkle.remove());
+            activeAnimations.sparkles.push(sparkle);
+
+            // PERFORMANCE: Remove after animation (2s)
+            setTimeout(() => {
+                sparkle.remove();
+                const index = activeAnimations.sparkles.indexOf(sparkle);
+                if (index > -1) activeAnimations.sparkles.splice(index, 1);
+            }, 2000);
         }
 
+        // PERFORMANCE: Throttled version of createSparkle
+        const createSparkleThrottled = throttle(createSparkle, 300);
+
+        // OPTIMIZED: Load images with lazy loading
         function loadImages() {
             const gallery = document.getElementById('image-gallery');
             imageUrls.forEach((url, index) => {
                 const card = document.createElement('div');
                 card.classList.add('gallery-card');
-                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animationDelay = `${index * 0.15}s`;
 
                 const img = document.createElement('img');
                 img.src = url;
                 img.alt = "Romantic Image";
                 img.classList.add('w-full', 'h-auto', 'rounded-lg');
+                // PERFORMANCE: Add loading="lazy" for lazy loading
+                img.loading = 'lazy';
+                // PERFORMANCE: Add decoding="async" for async decoding
+                img.decoding = 'async';
                 
                 card.appendChild(img);
                 gallery.appendChild(card);
 
-                card.addEventListener('click', (e) => {
+                // OPTIMIZED: Click effect with reduced animations on mobile
+                card.addEventListener('click', throttle((e) => {
                     const rect = card.getBoundingClientRect();
+                    const isMobile = window.innerWidth <= 768;
+                    const heartCount = isMobile ? 3 : 5;
+                    const sparkleCount = isMobile ? 5 : 10;
                     
-                    // Create multiple heart spreads
-                    for (let i = 0; i < 3; i++) {
+                    // Create heart spreads
+                    for (let i = 0; i < heartCount; i++) {
                         setTimeout(() => {
                             const heart = document.createElement('span');
                             heart.classList.add('heart-spread');
-                            heart.style.left = `${e.clientX - rect.left}px`;
-                            heart.style.top = `${e.clientY - rect.top}px`;
+                            heart.style.left = `${e.clientX - rect.left + (Math.random() - 0.5) * 30}px`;
+                            heart.style.top = `${e.clientY - rect.top + (Math.random() - 0.5) * 30}px`;
                             card.appendChild(heart);
-                            heart.addEventListener('animationend', () => heart.remove());
-                        }, i * 200);
+                            setTimeout(() => heart.remove(), 1500);
+                        }, i * 150);
                     }
                     
                     // Create sparkles around click
-                    for (let i = 0; i < 5; i++) {
+                    for (let i = 0; i < sparkleCount; i++) {
                         const sparkle = document.createElement('div');
                         sparkle.classList.add('sparkle');
-                        sparkle.style.left = `${e.clientX - rect.left + (Math.random() - 0.5) * 50}px`;
-                        sparkle.style.top = `${e.clientY - rect.top + (Math.random() - 0.5) * 50}px`;
+                        sparkle.style.left = `${e.clientX - rect.left + (Math.random() - 0.5) * 80}px`;
+                        sparkle.style.top = `${e.clientY - rect.top + (Math.random() - 0.5) * 80}px`;
                         sparkle.style.position = 'absolute';
                         card.appendChild(sparkle);
-                        sparkle.addEventListener('animationend', () => sparkle.remove());
+                        setTimeout(() => sparkle.remove(), 2000);
                     }
-                });
+                }, 500));
             });
         }
+
+        // PERFORMANCE: Optimized falling items creation
+        const createFallingPetal = throttle(() => createFallingItem('petal'), 500);
+        const createFallingHeart = throttle(() => createFallingItem('heart'), 700);
 
         // Main function to run on window load
         window.onload = function() {
@@ -490,16 +750,37 @@
                     introTextElement.innerHTML = '';
                     introTextElement.appendChild(textElement);
                     index++;
-                    setTimeout(showNextMessage, 3000);
+                    setTimeout(showNextMessage, 4000);
                 } else {
                     setupBackground();
                 }
             }
+            
             showNextMessage();
             loadImages();
-            setInterval(() => createFallingItem('petal'), 400);
-            setInterval(() => createFallingItem('heart'), 600);
+            
+            // PERFORMANCE: Start falling items with intervals
+            setInterval(createFallingPetal, 800);
+            setInterval(createFallingHeart, 1100);
         };
+
+        // PERFORMANCE: Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            activeAnimations.falling.forEach(item => item.remove());
+            activeAnimations.sparkles.forEach(item => item.remove());
+            activeAnimations.falling = [];
+            activeAnimations.sparkles = [];
+        });
+
+        // PERFORMANCE: Pause animations when tab is not visible
+        document.addEventListener('visibilitychange', () => {
+            const audio = document.getElementById('background-audio');
+            if (document.hidden) {
+                if (audio) audio.pause();
+            } else {
+                if (audio && !audio.paused) audio.play();
+            }
+        });
     </script>
 </body>
 </html>
